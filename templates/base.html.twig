@@ -39,57 +39,60 @@
 
     </style>
 
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-          <a class="navbar-brand" href="/">JMI Industries</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-          </button>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">JMI Industries</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-          <div class="collapse navbar-collapse" id="navbarColor02">
-              <ul class="navbar-nav mr-auto">
-                  <li class="nav-item active">
-                      <a class="nav-link" href="/login">Connexion <span class="sr-only">(current)</span></a>
-                  </li>
-                  {% if is_granted('ROLE_CLIENT') %}
-                  <li class="nav-item">
-                      <a class="nav-link" href="ajoutFacturation">Louer</a>
-                  </li>
-                  {% endif %}
-                  {% if is_granted('ROLE_CLIENT') %}
-                  <li class="nav-item">
-                      <a class="nav-link" href="liste_des_factures">Liste des factures</a>
-                  </li>
-                  {% endif %}
-                  {% if is_granted('ROLE_CLIENT') %}
-                  <li class="nav-item">
-                      <a class="nav-link" href="liste_des_vehicules_louees">Liste des véhicules loués</a>
-                  </li>
-                  {% endif %}
-                  {% if is_granted('ROLE_LOUEUR') %}
-                  <li class="nav-item">
-                      <a class="nav-link" href="/ajoutVehicule">Ajout de véhicules</a>
-                  </li>          
-                  {% endif %}
-                  {% if is_granted('ROLE_LOUEUR') %}
-                  <li class="nav-item">
+        <div class="collapse navbar-collapse" id="navbarColor02">
+            <ul class="navbar-nav mr-auto">
+                {% if not is_granted('ROLE_CLIENT') and not is_granted('ROLE_LOUEUR') and not is_granted('ROLE_ADMIN') %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="/login">Connexion <span class="sr-only">(current)</span></a>
+                </li>
+                {% endif %}
+                {% if is_granted('ROLE_CLIENT') %}
+                <li class="nav-item">
+                    <a class="nav-link" href="ajoutFacturation">Louer</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="liste_des_factures">Liste des factures</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="liste_des_vehicules_louees">Liste des véhicules loués</a>
+                </li>
+                {% endif %}
+                {% if is_granted('ROLE_LOUEUR') %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/ajoutVehicule">Ajout de véhicules</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="liste_des_facturations">Liste des facturations</a>
-                </li>        
-                  {% endif %}
-                  {% if is_granted('ROLE_ADMIN') %}
-                      <li class="nav-item dropdown">
-                          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Administrateur</a>
-                          <div class="dropdown-menu">
-                          <a class="dropdown-item" href="admin/facturation">Gérer les facturations</a>
-                          <a class="dropdown-item" href="admin/vehicule">Gérer les véhicules</a>
-                          
-                      </li>
-                  {% endif %}
-                  <li class="nav-item">
+                </li>
+                {% endif %}
+                {% if is_granted('ROLE_ADMIN') %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Administrateur</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="admin/facturation">Gérer les facturations</a>
+                        <a class="dropdown-item" href="admin/vehicule">Gérer les véhicules</a>
+
+                </li>
+                {% endif %}
+                <li class="nav-item">
                     <a class="nav-link" href={{ path('about_us') }}>A propos</a>
                 </li>
-              </ul> 
-          </div>
-      </nav>
+            </ul>
+            {% if is_granted('ROLE_CLIENT') or is_granted('ROLE_LOUEUR') or  is_granted('ROLE_ADMIN') %}
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Déconnexion</a>
+                </li>
+            </ul>
+            {% endif %}
+        </div>
+    </nav>
  
       {% block body %}
 

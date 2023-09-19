@@ -49,7 +49,7 @@ class AddVehiculeController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
-        return $this->render('site/add_vehicule.html.twig', [
+        return $this->render('loueur/add_vehicule.html.twig', [
             'formVehicule' => $form->createView(),
         ]);
     }
